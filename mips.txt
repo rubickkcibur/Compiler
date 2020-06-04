@@ -1,0 +1,97 @@
+.text
+.data
+ int:.asciiz "\n"
+.data
+ char:.asciiz "\n"
+.text
+
+ENTRY
+
+BL main
+MOV PC,LR
+.data
+label1:.zero 28
+.text
+
+label2:
+.text
+ADD SP,SP,#-12
+STR r4,[SP,#0]
+STR r5,[SP,#4]
+MOVW r5,0
+MOVW r4,0
+labelgasc2389v2:
+MOVW r12,#5
+CMP r4,r12
+MOVLT r12,#1
+MOVGE r12,#0
+STR r12,[SP,#8]
+LDR r11,[SP,#8]
+MOVW r12,#0
+CMP r11,r12
+BEQ labelgasc2389v3
+MOVW r12,#1
+ADD r5,r5,r12
+MOVW r12,#1
+ADD r4,r4,r12
+B labelgasc2389v2
+labelgasc2389v3:
+PUSH {a1}
+MOV a1,r4
+PUSH {LR}
+BL putint
+POP {LR}
+POP {a1}
+PUSH {a1}
+MOV a1,r5
+PUSH {LR}
+BL putint
+POP {LR}
+POP {a1}
+MOV a1,r5
+LDR r4,[SP,#0]
+LDR r5,[SP,#4]
+ADD SP,SP,#12
+MOV PC,LR
+main:
+.text
+ADD SP,SP,#-12
+MOVW r11,#3
+STR r11,label1+0
+MOVW r11,#4
+STR r11,label1+8
+ADD SP,SP,#-4
+STR r14,[SP]
+BL starttime
+LDR r14,[SP]
+ADD SP,SP,#4
+ADD SP,SP,#-4
+STR r14,[SP]
+BL label2
+LDR r14,[SP]
+ADD SP,SP,#4
+STR a1,[SP,#8]
+PUSH {a1}
+LDR a1,[SP,#12]
+PUSH {LR}
+BL putint
+POP {LR}
+POP {a1}
+LDR r11,label1+8
+STR r11,[SP,#4]
+PUSH {a1}
+LDR a1,[SP,#8]
+PUSH {LR}
+BL putint
+POP {LR}
+POP {a1}
+LDR r11,label1+0
+STR r11,[SP,#0]
+PUSH {a1}
+LDR a1,[SP,#4]
+PUSH {LR}
+BL putint
+POP {LR}
+POP {a1}
+ADD SP,SP,#12
+MOV PC,LR
